@@ -3,10 +3,10 @@ function usage()
 {
 	echo "这个脚本用来创建自解压的安装包"
 	echo "安装包目录结构应该如下："
-	echo "----PackageFile"
-	echo "\t--install.sh"
-	echo "\t--app1"
-	echo "\t--app2"
+	echo "--------PackageFile"
+	echo -e "\t--install.sh"
+	echo -e "\t--app1"
+	echo -e "\t--app2"
 	echo "app1为应用1，app2为应用2。install.sh负责对app1和app2进行安装。用户需要自己编写install.sh"
 	echo "用法：$0 pkg_name out_file_name"
 	echo "生成的安装包跟脚本在同一个位置"
@@ -27,16 +27,19 @@ function abort_if_last_cmd_fail()
 
 InstalledPackage=$1
 if [ "x" = "x${InstalledPackage}" ];then
-	promt_and_abort "please specify a file"
+	usage
+	promt_and_abort "ERROR:请指定要压缩的安装包pkg_name"
 fi
 
 if [ ! -d ${InstalledPackage} ];then
-	promt_and_abort "${InstalledPackage} not an directory"
+	usage
+	promt_and_abort "ERROR:${InstalledPackage} 不是一个目录"
 fi
 
 OutputFile=$2
 if [ "x" = "${OutputFile}x" ];then
-	promt_and_abort "please specify output file name"
+	usage
+	promt_and_abort "ERROR:请制定输出文件out_file_name的名字"
 fi
 
 InstalledPackage=${InstalledPackage%/*}
