@@ -43,6 +43,8 @@ def BFS(grids:Grid, start, target):
             if next not in came_from:
                 queue.put(next)
                 came_from[next] = current
+    
+    return reconstruct_path(came_from,start, target)
 
 """
 key point: based on BFS, what's more on Dijkstra's Searching
